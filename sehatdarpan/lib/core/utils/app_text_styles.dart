@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'font_size_util.dart';
 import 'app_colors.dart';
-import 'font_size.dart';
 
 class AppTextStyles {
   static TextStyle regular({Color color = AppColor.darkText, required BuildContext context, double fontSize = 16.0}) {
@@ -57,6 +57,7 @@ class AppTextStyles {
     );
   }
 
+  // Heading Styles
   static TextStyle heading1({Color color = AppColor.darkText, required BuildContext context}) {
     return bold(color: color, context: context, fontSize: 24.0);
   }
