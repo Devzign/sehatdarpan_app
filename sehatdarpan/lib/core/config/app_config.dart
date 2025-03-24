@@ -1,5 +1,5 @@
 class AppConfig {
-    static const String devBaseUrl = "http://localhost:5001/api/";
+    static const String devBaseUrl = "http://192.168.31.154:5001/api/";
   static const String stagingBaseUrl = "https://api.staging.example.com";
   static const String prodBaseUrl = "https://api.example.com";
 
