@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../data/models/landing_model.dart';
 import '../../data/providers/landing_service.dart';
 
@@ -54,58 +55,96 @@ class LandingPageItem extends StatelessWidget {
   final String message;
   final String imageUrl;
 
-  LandingPageItem(
-      {required this.title, required this.message, required this.imageUrl});
+  LandingPageItem({
+    required this.title,
+    required this.message,
+    required this.imageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.green.shade700,
-      child: Column(
-        children: [
-          Expanded(
-            flex: 6,
-            child: Image.network(imageUrl, fit: BoxFit.cover),
-          ),
-          Expanded(
-            flex: 4,
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(title,
-                      style:
-                          const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 10),
-                  Text(message,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 16)),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green.shade700,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Stack(
+          alignment: Alignment.bottomCenter,
+          clipBehavior: Clip.none,
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Container(),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: const BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
                     ),
-                    child: const Text("NEXT",
-                        style: TextStyle(fontSize: 16, color: Colors.white)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(title,
+                            style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
+                        const SizedBox(height: 10),
+                        Text(message,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 16, color: Colors.white)),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 12),
+                          ),
+                          child: const Text("NEXT",
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.green)),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
+                ),
+              ],
+            ),
+            Positioned(
+              top: constraints.maxHeight / 2 - 300,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: _buildImageWidget(),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
+  }
+
+  Widget _buildImageWidget() {
+    if (imageUrl.toLowerCase().endsWith('.svg')) {
+      return SvgPicture.network(
+        imageUrl,
+        width: 250,
+        fit: BoxFit.contain,
+      );
+    } else {
+      return Image.network(
+        imageUrl,
+        width: 250,
+        fit: BoxFit.contain,
+      );
+    }
   }
 }
